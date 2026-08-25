@@ -120,6 +120,7 @@ Create a custom view:
 from django.http import HttpResponse
 from prometheus_client import REGISTRY, generate_latest
 
+
 def metrics_view(request):
     """Expose Prometheus metrics."""
     metrics = generate_latest(REGISTRY)
@@ -147,6 +148,7 @@ from django.core.management.base import BaseCommand
 from prometheus_client import start_http_server
 import threading
 
+
 class Command(BaseCommand):
     help = "Run worker with Prometheus metrics server"
 
@@ -157,6 +159,7 @@ class Command(BaseCommand):
 
         # Run your worker
         from django.core.management import call_command
+
         call_command("run_redis_tasks", continuous=True)
 ```
 
