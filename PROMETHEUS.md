@@ -29,6 +29,19 @@ TASKS = {
 }
 ```
 
+### Performance
+
+Registering the collector never touches Redis (the collector implements
+`describe()`), so enabling metrics adds no cost to `django.setup()` — web,
+`migrate`, and shell processes start instantly even with large task volumes.
+
+Scrapes read pre-maintained per-status indexes, so `/metrics` latency is
+independent of how many task results are stored. The index is built
+automatically on worker startup for new installations; deployments upgrading
+from a version without it should run
+`python manage.py rebuild_redis_task_index` once (until then, scrapes fall
+back to scanning every stored result).
+
 ## Available Metrics
 
 ### Counters

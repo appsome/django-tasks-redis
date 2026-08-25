@@ -148,6 +148,8 @@ class TestRedisTaskMetricsCollector:
 
         mock_backend = Mock()
         mock_backend.alias = "test"
+        # Exercise the legacy (index-less) age computation path
+        mock_backend.has_status_index.return_value = False
         mock_backend.get_status_counts.return_value = {
             TaskResultStatus.READY: 3,
             TaskResultStatus.RUNNING: 1,
@@ -247,6 +249,8 @@ class TestRedisTaskMetricsCollector:
 
         mock_backend = Mock()
         mock_backend.alias = "test"
+        # Exercise the legacy (index-less) age computation path
+        mock_backend.has_status_index.return_value = False
         mock_backend.get_status_counts.return_value = {
             TaskResultStatus.READY: 3,
         }
